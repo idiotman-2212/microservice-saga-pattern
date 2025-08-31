@@ -1,0 +1,11 @@
+C:\Users\dienc\Desktop\DBIZ\microservice\spring-boot-microservices\inventory-service\src\main\java\com\example\inventoryservice\service\InventoryService.java
+C:\Users\dienc\Desktop\DBIZ\microservice\spring-boot-microservices\inventory-service\src\main\java\com\example\inventoryservice\event\OrderItemEvent.java
+C:\Users\dienc\Desktop\DBIZ\microservice\spring-boot-microservices\inventory-service\src\main\java\com\example\inventoryservice\repository\InventoryRepository.java
+C:\Users\dienc\Desktop\DBIZ\microservice\spring-boot-microservices\inventory-service\src\main\java\com\example\inventoryservice\controller\InventoryController.java
+C:\Users\dienc\Desktop\DBIZ\microservice\spring-boot-microservices\inventory-service\src\main\java\com\example\inventoryservice\model\TransactionType.java
+C:\Users\dienc\Desktop\DBIZ\microservice\spring-boot-microservices\inventory-service\src\main\java\com\example\inventoryservice\InventoryServiceApplication.java
+C:\Users\dienc\Desktop\DBIZ\microservice\spring-boot-microservices\inventory-service\src\main\java\com\example\inventoryservice\event\OrderCreatedEvent.java
+C:\Users\dienc\Desktop\DBIZ\microservice\spring-boot-microservices\inventory-service\src\main\java\com\example\inventoryservice\repository\InventoryTransactionRepository.java
+C:\Users\dienc\Desktop\DBIZ\microservice\spring-boot-microservices\inventory-service\src\main\java\com\example\inventoryservice\model\InventoryTransaction.java
+C:\Users\dienc\Desktop\DBIZ\microservice\spring-boot-microservices\inventory-service\src\main\java\com\example\inventoryservice\kafka\InventoryEventListener.java
+C:\Users\dienc\Desktop\DBIZ\microservice\spring-boot-microservices\inventory-service\src\main\java\com\example\inventoryservice\model\Inventory.java
