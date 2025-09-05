@@ -79,4 +79,11 @@ public class PaymentService {
         payment.setStatus(PaymentStatus.REFUNDED);
         paymentRepository.save(payment);
     }
+
+    public void refundPaymentByOrderId(Long orderId) {
+        Payment payment = paymentRepository.findByOrderId(orderId)
+                .orElseThrow(() -> new RuntimeException("Payment not found for order: " + orderId));
+        payment.setStatus(PaymentStatus.REFUNDED);
+        paymentRepository.save(payment);
+    }
 }
