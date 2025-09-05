@@ -16,6 +16,7 @@ public class InventoryEventListener {
     @KafkaListener(topics = "${kafka.topics.payment-completed}")
     public void handlePaymentCompleted(OrderCreatedEvent event) {
         try {
+            log.info("Processing order after payment completed: {}", event.getOrderId());
             inventoryService.processOrder(event.getOrderId(), event.getItems());
         } catch (Exception e) {
             // Error handling is done in the service layer
@@ -27,6 +28,7 @@ public class InventoryEventListener {
     @KafkaListener(topics = "${kafka.topics.saga-rollback}")
     public void handleSagaRollback(OrderCreatedEvent event) {
         try {
+            log.info("Rolling back order: {}", event.getOrderId());
             inventoryService.rollbackOrder(event.getOrderId(), event.getItems());
         } catch (Exception e) {
             log.error("Error while rolling back order: {}", event.getOrderId(), e);

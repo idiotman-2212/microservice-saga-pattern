@@ -41,15 +41,15 @@ public class OrderSaga {
         kafkaTemplate.send(orderCreatedTopic, event);
     }
 
-    @KafkaListener(topics = "${kafka.topics.payment-completed}")
-    public void handlePaymentCompleted(Long orderId) {
-        Order order = orderRepository.findById(orderId)
+    @KafkaListener(topics = "${kafka.topics.payment-completed}", containerFactory = "orderEventKafkaListenerContainerFactory")
+    public void handlePaymentCompleted(com.example.orderservice.event.OrderCreatedEvent event) {
+        Order order = orderRepository.findById(event.getOrderId())
                 .orElseThrow(() -> new RuntimeException("Order not found"));
         order.setStatus(OrderStatus.INVENTORY_PENDING);
         orderRepository.save(order);
     }
 
-    @KafkaListener(topics = "${kafka.topics.payment-failed}")
+    @KafkaListener(topics = "${kafka.topics.payment-failed}", containerFactory = "longKafkaListenerContainerFactory")
     public void handlePaymentFailed(Long orderId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
@@ -57,7 +57,7 @@ public class OrderSaga {
         orderRepository.save(order);
     }
 
-    @KafkaListener(topics = "${kafka.topics.inventory-updated}")
+    @KafkaListener(topics = "${kafka.topics.inventory-updated}", containerFactory = "longKafkaListenerContainerFactory")
     public void handleInventoryUpdated(Long orderId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
@@ -65,7 +65,7 @@ public class OrderSaga {
         orderRepository.save(order);
     }
 
-    @KafkaListener(topics = "${kafka.topics.inventory-failed}")
+    @KafkaListener(topics = "${kafka.topics.inventory-failed}", containerFactory = "longKafkaListenerContainerFactory")
     public void handleInventoryFailed(Long orderId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));

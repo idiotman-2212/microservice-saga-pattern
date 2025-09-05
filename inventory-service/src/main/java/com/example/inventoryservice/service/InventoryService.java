@@ -85,10 +85,12 @@ public class InventoryService {
         }
     }
 
+    @Transactional
     public List<Inventory> getAllInventory() {
         return inventoryRepository.findAll();
     }
 
+    @Transactional
     public Inventory getInventoryByProductId(Long productId) {
         return inventoryRepository.findByProductIdWithLock(productId)
                 .orElseThrow(() -> new RuntimeException("Inventory not found"));
@@ -106,6 +108,7 @@ public class InventoryService {
         return inventoryRepository.save(inventory);
     }
 
+    @Transactional
     public void deleteInventory(Long id) {
         inventoryRepository.deleteById(id);
     }

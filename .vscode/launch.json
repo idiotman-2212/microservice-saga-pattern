@@ -1,0 +1,61 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Service Discovery",
+            "request": "launch",
+            "mainClass": "com.example.servicediscovery.ServiceDiscoveryApplication",
+            "projectName": "service-discovery",
+            "vmArgs": "-Dserver.port=8761"
+        },
+        {
+            "type": "java",
+            "name": "API Gateway",
+            "request": "launch",
+            "mainClass": "com.example.apigateway.ApiGatewayApplication",
+            "projectName": "api-gateway",
+            "vmArgs": "-Dserver.port=8080"
+        },
+        {
+            "type": "java",
+            "name": "Customer Service",
+            "request": "launch",
+            "mainClass": "com.example.customerservice.CustomerServiceApplication",
+            "projectName": "customer-service",
+            "vmArgs": "-Dserver.port=8081"
+        },
+        {
+            "type": "java",
+            "name": "Product Service",
+            "request": "launch",
+            "mainClass": "com.example.productservice.ProductServiceApplication",
+            "projectName": "product-service",
+            "vmArgs": "-Dserver.port=8082"
+        },
+        {
+            "type": "java",
+            "name": "Order Service",
+            "request": "launch",
+            "mainClass": "com.example.orderservice.OrderServiceApplication",
+            "projectName": "order-service",
+            "vmArgs": "-Dserver.port=8083"
+        },
+        {
+            "type": "java",
+            "name": "Payment Service",
+            "request": "launch",
+            "mainClass": "com.example.paymentservice.PaymentServiceApplication",
+            "projectName": "payment-service",
+            "vmArgs": "-Dserver.port=8084"
+        },
+        {
+            "type": "java",
+            "name": "Inventory Service",
+            "request": "launch",
+            "mainClass": "com.example.inventoryservice.InventoryServiceApplication",
+            "projectName": "inventory-service",
+            "vmArgs": "-Dserver.port=8085"
+        }
+    ]
+}

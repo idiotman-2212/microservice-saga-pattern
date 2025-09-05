@@ -39,8 +39,8 @@ public class PaymentService {
             payment.setStatus(PaymentStatus.COMPLETED);
             paymentRepository.save(payment);
             
-            // Notify successful payment
-            kafkaTemplate.send(paymentCompletedTopic, event.getOrderId());
+            // Notify successful payment - send the full event instead of just orderId
+            kafkaTemplate.send(paymentCompletedTopic, event);
         } catch (Exception e) {
             payment.setStatus(PaymentStatus.FAILED);
             paymentRepository.save(payment);

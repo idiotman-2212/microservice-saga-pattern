@@ -5,6 +5,7 @@ com\example\orderservice\model\Order.class
 com\example\orderservice\model\OrderStatus.class
 com\example\orderservice\config\KafkaConfig.class
 com\example\orderservice\dto\OrderItemDto.class
+com\example\orderservice\config\KafkaListenerConfig.class
 com\example\orderservice\repository\OrderRepository.class
 com\example\orderservice\model\OrderItem.class
 com\example\orderservice\event\OrderCreatedEvent.class

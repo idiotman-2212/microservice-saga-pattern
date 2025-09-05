@@ -41,8 +41,8 @@ public class ProductController {
     }
 
     @PostMapping("/clear-cache")
-    public ResponseEntity<Void> clearCache() {
+    public ResponseEntity<?> clearCache() {
         productService.clearCache();
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Clear cache done");
     }
 }
