@@ -4,7 +4,9 @@ import com.example.inventoryservice.event.OrderCreatedEvent;
 import com.example.inventoryservice.service.InventoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -12,6 +14,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class InventoryEventListener {
     private final InventoryService inventoryService;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
+
+    @Value("${kafka.topics.inventory-failed}")
+    private String inventoryFailedTopic;
 
     @KafkaListener(topics = "${kafka.topics.payment-completed}")
     public void handlePaymentCompleted(OrderCreatedEvent event) {
@@ -19,9 +25,9 @@ public class InventoryEventListener {
             log.info("Processing order after payment completed: {}", event.getOrderId());
             inventoryService.processOrder(event.getOrderId(), event.getItems());
         } catch (Exception e) {
-            // Error handling is done in the service layer
             log.error("Error while processing order: {}", event.getOrderId(), e);
-            throw new RuntimeException("Failed to process order: " + event.getOrderId(), e);
+            // Send inventory.failed event to trigger saga rollback
+            kafkaTemplate.send(inventoryFailedTopic, event.getOrderId());
         }
     }
 

@@ -67,10 +67,25 @@ public class InventoryService {
 
     @Transactional
     public void rollbackOrder(Long orderId, List<OrderItemEvent> items) {
+        // Check if rollback already processed for this order
+        boolean alreadyProcessed = transactionRepository.existsByOrderIdAndType(orderId, TransactionType.ROLLBACK);
+        if (alreadyProcessed) {
+            System.out.println("Rollback already processed for order: " + orderId + ", skipping...");
+            return;
+        }
+
+        // Check if inventory was actually reduced for this order
+        boolean inventoryWasReduced = transactionRepository.existsByOrderIdAndType(orderId, TransactionType.STOCK_OUT);
+        if (!inventoryWasReduced) {
+            System.out.println("No inventory was reduced for order: " + orderId + ", no rollback needed");
+            return;
+        }
+
         for (OrderItemEvent item : items) {
             Inventory inventory = inventoryRepository.findByProductIdWithLock(item.getProductId())
                     .orElseThrow(() -> new RuntimeException("Product not found in inventory"));
 
+            // Only rollback if inventory was actually reduced
             inventory.setQuantity(inventory.getQuantity() + item.getQuantity());
             inventoryRepository.save(inventory);
 

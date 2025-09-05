@@ -1,11 +1,12 @@
+com\example\inventoryservice\config\KafkaConfig.class
+com\example\inventoryservice\kafka\InventoryEventListener.class
+com\example\inventoryservice\event\OrderCreatedEvent.class
 com\example\inventoryservice\model\TransactionType.class
 com\example\inventoryservice\repository\InventoryRepository.class
 com\example\inventoryservice\service\InventoryService.class
 com\example\inventoryservice\model\InventoryTransaction.class
-com\example\inventoryservice\kafka\InventoryEventListener.class
 com\example\inventoryservice\repository\InventoryTransactionRepository.class
 com\example\inventoryservice\InventoryServiceApplication.class
 com\example\inventoryservice\event\OrderItemEvent.class
 com\example\inventoryservice\controller\InventoryController.class
-com\example\inventoryservice\event\OrderCreatedEvent.class
 com\example\inventoryservice\model\Inventory.class

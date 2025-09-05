@@ -7,6 +7,7 @@ import com.example.orderservice.model.OrderItem;
 import com.example.orderservice.model.OrderStatus;
 import com.example.orderservice.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class OrderSaga {
@@ -72,9 +74,23 @@ public class OrderSaga {
         order.setStatus(OrderStatus.INVENTORY_FAILED);
         orderRepository.save(order);
         
-        // Trigger compensation transaction
-        kafkaTemplate.send(sagaRollbackTopic, orderId);
+        // Create rollback event with full order details
+        OrderCreatedEvent rollbackEvent = new OrderCreatedEvent();
+        rollbackEvent.setOrderId(order.getId());
+        rollbackEvent.setCustomerId(order.getCustomerId());
+        
+        // Fetch order items in a separate query to avoid LazyInitializationException
+        Order orderWithItems = orderRepository.findByIdWithItems(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+        
+        rollbackEvent.setItems(orderWithItems.getItems().stream()
+                .map(this::mapToOrderItemEvent)
+                .collect(Collectors.toList()));
+        
+        // Trigger compensation transaction with full event data
+        kafkaTemplate.send(sagaRollbackTopic, rollbackEvent);
     }
+
 
     private OrderItemEvent mapToOrderItemEvent(OrderItem orderItem) {
         return new OrderItemEvent(
