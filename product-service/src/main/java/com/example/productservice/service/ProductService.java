@@ -21,7 +21,7 @@ public class ProductService {
     private static final String REDIS_LIST_KEY = "products:all";
 
     public List<Product> getAllProducts() {
-        // Try to get from Redis
+        // get from Redis
         @SuppressWarnings("unchecked")
         List<Product> cachedProducts = (List<Product>) redisTemplate.opsForValue().get(REDIS_LIST_KEY);
         
@@ -40,7 +40,7 @@ public class ProductService {
     public Product getProductById(Long id) {
         String key = REDIS_KEY_PREFIX + id;
         
-        // Try to get from Redis
+        // get from Redis
         Product cachedProduct = (Product) redisTemplate.opsForValue().get(key);
         if (cachedProduct != null) {
             log.info("Fetching product {} from Redis cache", id);
